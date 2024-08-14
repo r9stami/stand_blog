@@ -48,7 +48,8 @@
                                             <div class="row">
                                                 <div class="col-6">
                                                     <ul class="post-tags">
-                                                        {% if is_like %}
+                                                      {% if request.user.is_authenticated %}
+                                                              {% if is_like %}
                                                             <li>
                                                                 <a
                                                                    onclick="like_post('{{ object.slug }}','{{ object.id }}')"><i style="font-size: 20px;"
@@ -63,6 +64,7 @@
                                                                     id="count">{{ object.likes.all.count }}</span></i></a>
                                                             </li>
 
+                                                        {% endif %}
                                                         {% endif %}
                                                     </ul>
                                                 </div>
