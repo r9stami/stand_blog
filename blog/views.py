@@ -8,7 +8,7 @@ from .models import Post, Category, Comment, Like
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin,DetailView):
     model = Post
 
     def get_context_data(self, **kwargs):
@@ -31,7 +31,7 @@ class CommentCreateView(LoginRequiredMixin,View):
             return redirect('blog:post_detail',slug=slug)
 
 
-class LikePostView(View):
+class LikePostView(LoginRequiredMixin,View):
     def get(self,request,slug,pk):
         try:
             like = Like.objects.get(user_id=request.user.id,post__slug=slug)
