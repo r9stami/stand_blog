@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+  {% block content %}
+        <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Recent Posts</h4>
+                <h2>Our Recent Blog Entries</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Banner Ends Here -->
+
+
+
+
+    <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+                {% for post in object_list %}
+
+                    <div class="col-lg-6">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img src="{{ post.image.url }}" alt="post image">
+                    </div>
+                    <div class="down-content">
+                      <span>Lifestyle</span>
+                      <a href="{{ post.get_absolute_url }}"><h4>{{ post.title }}</h4></a>
+                      <ul class="post-info">
+                        <li><a href="#">{{ post.author }}</a></li>
+                        <li><a href="#">{{ post.created_at }}</a></li>
+                        <li><a href="#">{{ post.comments.all.count }} Comments</a></li>
+                      </ul>
+                        <p>{{ post.description }}</p>
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-lg-12">
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                  {% endfor %}
+                <div class="col-lg-12">
+                 {% if object_list.has_other_pages %}
+                     <ul class="page-numbers">
+                      {% if object_list.has_previous %}
+                     <li><a href="?page={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fa fa-angle-double-left"></i></a></li>
+                          {% endif %}
+                    {% for item in object_list.paginator.page_range %}
+                     {% if object_list.number == item %}
+                        <li class="active"><a href="?page={{ item }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ item }}</a></li>
+                         {% else %}
+                         <li class=""><a href="?page={{ item }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ item }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                   {% if object_list.has_next %}
+                        <li><a href="?page={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fa fa-angle-double-right"></i></a></li>
+                       {% endif %}
+                  </ul>
+
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+           {% include 'includes/sidebar.html' %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% endblock %}

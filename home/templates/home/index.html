@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+
+
+{% block content %}
+
+
+
+
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="main-banner header-text">
+        <div class="container-fluid">
+            <div class="owl-banner owl-carousel">
+
+                {% for item in object_list %}
+                    <div class="item">
+                        <img src="{{ item.image.url }}" alt="post image">
+                        <div class="item-content">
+                            <div class="main-content">
+                                <div class="meta-category">
+                                    <span>{{ item.category.all.first.title }}</span>
+                                </div>
+                                <a href="{{ item.get_absolute_url }}"><h4>{{ item.title }}</h4></a>
+                                <ul class="post-info">
+                                    <li><a href="#">{{ item.author }}</a></li>
+                                    <li><a href="#">{{ item.created_at }}</a></li>
+                                    <li><a href="#">{{ item.comments.all.count }} Comments</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Banner Ends Here -->
+
+
+
+
+    <section class="blog-posts">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="all-blog-posts">
+                        <div class="row">
+                            {% for post in object_list %}
+
+                                <div class="col-lg-12">
+                                    <div class="blog-post">
+                                        <div class="blog-thumb">
+                                            <img src="{{ post.image.url }}" alt="post image">
+                                        </div>
+                                        <div class="down-content">
+                                            <span>Lifestyle</span>
+                                            <a href="{{ post.get_absolute_url }}"><h4>{{ post.title }}</h4></a>
+                                            <ul class="post-info">
+                                                <li><a href="#">{{ post.author }}</a></li>
+                                                <li><a href="#">{{ post.created_at }}</a></li>
+                                                <li><a href="#">{{ post.comments.all.count }} Comments</a></li>
+                                            </ul>
+                                            <p>{{ post.description }}</p>
+                                            <div class="post-options">
+                                                <div class="row">
+                                                    <div class="col-6">
+
+                                                    </div>
+                                                    <div class="col-6">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    {% include 'includes/sidebar.html' %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
